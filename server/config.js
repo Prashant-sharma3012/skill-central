@@ -1,4 +1,7 @@
 module.exports = {
-  dbUser: "root",
-  dbPwd: "dev"
+  dbUser: "devUser",
+  dbPwd: "password",
+  dbHost: "localhost",
+  dbPort: "3306",
+  dbName: "skillcentral"
 }
