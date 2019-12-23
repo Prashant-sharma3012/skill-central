@@ -1,64 +1,40 @@
-const express  = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const logger = require('./utils/logger');
-
-// DB
+const appBootstrap = require('./app.bootstrap');
 const db = require('./db');
-
-//Routes
+const auth = require('./middleware/auth');
 const loginRoutes = require('./routes/login.route');
-const userRoutes = require('./routes/user.route');
-const skillRoutes = require('./routes/skills.route');
-const userSkillRoutes = require('./routes/userSkills.route');
 
-logger.info("Initializing");
-
-logger.info("Connecting to DB");
+logger.info("Starting App");
 
 // test connection
+logger.info("Connecting to DB");
 db.sequelize.authenticate()
   .then(() => {
     logger.info("Connected to DB");
-    logger.info("Initializing Models");
-    
-    // add models
-    require('./models/emp.model')(db.sequelize, db.Sequelize.DataTypes);
-    require('./models/empSkill.model')(db.sequelize, db.Sequelize.DataTypes);
-    require('./models/skill.model')(db.sequelize, db.Sequelize.DataTypes);
-
-    logger.info("Initializing Models Complete");
+    appBootstrap.initModels(db);
   })
   .catch((err) => {
     logger.error('Error connectingto DB');
     logger.error(err);
   });
 
-// middleware
-const auth = require('./middleware/auth');
-
 const app = express();
 
 logger.info("Adding Middlewares");
 // A bit of safe gaurding
 app.use(helmet());
-
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
 app.use(bodyParser.json())
 
-// keep login out of ath
+// keep login out of auth
 loginRoutes(app);
 
 // chk for token
 app.use(auth.authenticate);
 
-logger.info("Bootstrapping App");
-
-// add routes
-userRoutes(app);
-skillRoutes(app);
-userSkillRoutes(app);
+appBootstrap.initRoutes(app);
 
 module.exports = app;
