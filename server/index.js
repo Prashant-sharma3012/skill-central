@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const logger = require('./utils/logger');
 
+// DB
+const db = require('./db');
+
 //Routes
 const loginRoutes = require('./routes/login.route');
 const userRoutes = require('./routes/user.route');
@@ -10,6 +13,19 @@ const skillRoutes = require('./routes/skills.route');
 const userSkillRoutes = require('./routes/userSkills.route');
 
 logger.info("Initializing");
+
+logger.info("Connecting to DB");
+
+// test connection
+db.sequelize.authenticate()
+  .then(() => {
+    logger.info("Connected to DB");
+  })
+  .catch((err) => {
+    logger.error('Error connectingto DB');
+    logger.error(err);
+  });
+
 // middleware
 const auth = require('./middleware/auth');
 
