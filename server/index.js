@@ -20,6 +20,14 @@ logger.info("Connecting to DB");
 db.sequelize.authenticate()
   .then(() => {
     logger.info("Connected to DB");
+    logger.info("Initializing Models");
+    
+    // add models
+    require('./models/emp.model')(db.sequelize, db.Sequelize.DataTypes);
+    require('./models/empSkill.model')(db.sequelize, db.Sequelize.DataTypes);
+    require('./models/skill.model')(db.sequelize, db.Sequelize.DataTypes);
+
+    logger.info("Initializing Models Complete");
   })
   .catch((err) => {
     logger.error('Error connectingto DB');
