@@ -11,10 +11,8 @@ services:
   mySql:
     image: mysql
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_DATABASE=skillcentral
-      - MYSQL_USER=devUser
-      - MYSQL_PASSWORD=password
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
       - "3306:3306"
     volumes:

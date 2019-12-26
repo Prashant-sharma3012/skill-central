@@ -1,7 +1,11 @@
 const Sequelize = require('sequelize');
 const config = require('./config');
 
-const sequelize = new Sequelize(`mysql://${config.dbUser}:${config.dbPwd}@${config.dbHost}:${config.dbPort}/${config.dbName}`);
+
+var sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPwd, {
+    host: config.dbHost,
+    dialect: 'mysql'
+});
 
 module.exports = {
     sequelize,
