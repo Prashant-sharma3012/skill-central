@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('EmployeeSkill', {
+  return sequelize.define('employeeSkill', {
     emp_id: {
       type: DataTypes.INTEGER,
       notNull: true,

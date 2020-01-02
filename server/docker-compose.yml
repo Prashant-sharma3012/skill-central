@@ -1,13 +1,13 @@
 version: '3.1'
 services:
-  # app:
-  #   build: .
-  #   ports:
-  #   - "3000:3000"
-  #   volumes:
-  #   - .:/usr/src/app
-  #   depends_on:
-  #     - "mySql"
+  app:
+    build: .
+    ports:
+    - "3000:3000"
+    volumes:
+    - .:/usr/src/app
+    depends_on:
+      - "mySql"
   mySql:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
@@ -17,12 +17,12 @@ services:
     ports:
       - "3306:3306"
       - "33060:33060"
-    # volumes:
-    #   - my-db1:/var/lib/mysql
+    volumes:
+      - mysql-volume-skillcentral:/var/lib/mysql
   adminer:
     image: adminer
     restart: always
     ports:
       - 8082:8080
-# volumes:
-#   my-db1:
+volumes:
+  mysql-volume-skillcentral:
