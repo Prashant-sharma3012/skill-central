@@ -13,9 +13,9 @@ const initRoutes = (app) => {
 const initModels = (db) => {
   logger.info("Initializing Models");
   // add models
-  require('./models/emp.model')(db.sequelize, db.Sequelize.DataTypes);
-  require('./models/empSkill.model')(db.sequelize, db.Sequelize.DataTypes);
-  require('./models/skill.model')(db.sequelize, db.Sequelize.DataTypes);
+  db.models.Employee = require('./models/emp.model')(db.sequelize, db.Sequelize.DataTypes);
+  db.models.EmployeeSkill = require('./models/empSkill.model')(db.sequelize, db.Sequelize.DataTypes);
+  db.models.Skill = require('./models/skill.model')(db.sequelize, db.Sequelize.DataTypes);
 
   logger.info("Models Initialized");
 }

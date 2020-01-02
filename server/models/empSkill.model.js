@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-  sequelize.define('EmployeeSkill', {
+  return sequelize.define('EmployeeSkill', {
     emp_id: {
       type: DataTypes.INTEGER,
       notNull: true,
     },
     skill_category: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
     },
     skill_name: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
     },
     experience: {
       type: DataTypes.INTEGER,

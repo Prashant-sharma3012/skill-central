@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  sequelize.define('Skill', {
+  return sequelize.define('Skills', {
     skill_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -12,5 +12,4 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
     },
   }, { freezeTableName: true });
-
 }
