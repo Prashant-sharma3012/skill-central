@@ -47,4 +47,4 @@ const connect = async () => {
 
 }
 
-module.exports = { db, connect }
+module.exports = { instance: db, connect }
