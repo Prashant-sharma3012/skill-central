@@ -1,18 +1,29 @@
-var app = require('../index');
 var http = require('http');
 const logger = require('../utils/logger');
+const db = require('../db');
 
 var port = process.env.PORT || '3000';
-app.set('port', port);
 
-var server = http.createServer(app);
+logger.info("Starting App");
 
-server.listen(port, (err) => {
-  if(err){
-    logger.error(err);
-    logger.error("An Error Occured, Quiting!!");
-    process.exit(1);
-  }
+db.connect().then(() => {
+  var app = require('../index');
+  app.set('port', port);
+  var server = http.createServer(app);
 
-  logger.info(`Server up and running on port - ${port}`);
-});
+  server.listen(port, (err) => {
+    if(err){
+      logger.error(err);
+      logger.error("An Error Occured, Quiting!!");
+      process.exit(1);
+    }
+  
+    logger.info(`Server up and running on port - ${port}`);
+  });
+  
+}).catch((err) => {
+  logger.error(err);
+  logger.error("Error connecting to DB");
+  process.exit(1);
+})
+
