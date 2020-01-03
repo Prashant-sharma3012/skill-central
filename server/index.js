@@ -12,9 +12,9 @@ logger.info("Starting App");
 // test connection
 logger.info("Connecting to DB");
 db.sequelize.authenticate()
-  .then(() => {
+  .then(async () => {
     logger.info("Connected to DB");
-    appBootstrap.initModels(db);
+    await appBootstrap.initModels(db);
   })
   .catch((err) => {
     logger.error('Error connectingto DB');

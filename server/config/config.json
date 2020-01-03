@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "root",
+    "password": "topsecret",
+    "database": "skillcentral",
+    "host": "localhost",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "root",
+    "password": "topsecret",
+    "database": "skillcentral",
+    "host": "mySql",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "root",
+    "password": "topsecret",
+    "database": "skillcentral",
+    "host": "mySql",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}

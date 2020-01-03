@@ -1,4 +1,5 @@
 const logger = require('./utils/logger');
+const seeder = require('./seeders');
 
 const initRoutes = (app) => {
   logger.info("Adding Routes");
@@ -10,14 +11,15 @@ const initRoutes = (app) => {
   logger.info("Routes Initialized");
 }
 
-const initModels = (db) => {
+const initModels = async (db) => {
   logger.info("Initializing Models");
   // add models
-  db.models.Employee = require('./models/emp.model')(db.sequelize, db.Sequelize.DataTypes);
-  db.models.EmployeeSkill = require('./models/empSkill.model')(db.sequelize, db.Sequelize.DataTypes);
-  db.models.Skill = require('./models/skill.model')(db.sequelize, db.Sequelize.DataTypes);
+  db.models.Employee = require('./models/employees')(db.sequelize, db.Sequelize.DataTypes);
+  db.models.EmployeeSkill = require('./models/employeeSkill')(db.sequelize, db.Sequelize.DataTypes);
+  db.models.Skill = require('./models/skills')(db.sequelize, db.Sequelize.DataTypes);
 
   logger.info("Models Initialized");
+  await seeder(db);
 }
 
 

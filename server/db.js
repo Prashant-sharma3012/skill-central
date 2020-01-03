@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-const config = require('./config');
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/config/config.json')[env];
 
 const models = {
     Employee: '',
@@ -7,9 +8,9 @@ const models = {
     Skill: '',
   }
 
-var sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPwd, {
-    host: config.dbHost,
-    dialect: 'mysql'
+var sequelize = new Sequelize(config.database, config.username, config.password, {
+    host: config.host,
+    dialect: config.dialect
 });
 
 module.exports = {
