@@ -33,3 +33,13 @@ CREATE TABLE `skills` (
   `updatedAt` date,
   PRIMARY KEY (`skill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `employeesauth`;
+CREATE TABLE `employeesauth` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(50) NOT NULL,
+  `pwd` varchar(128) NOT NULL,
+  `createdAt` date,
+  `updatedAt` date,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
