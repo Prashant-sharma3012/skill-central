@@ -18,11 +18,9 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
 
 const initModels = async () => {
   logger.info("Initializing Models");
-  
-  let files = fs.readdirSync('./models');
-  for(let i=0; i< files.length; i++){
-    models[files[i].split('.')[0]] = require(`./models/${files[i]}`)(sequelize, Sequelize.DataTypes);
-  }
+
+  fs.readdirSync('./models')
+    .map(filename => models[filename.split('.')[0]] = require(`./models/${filename}`)(sequelize, Sequelize.DataTypes));
 
   logger.info("Models Initialized");
 }
