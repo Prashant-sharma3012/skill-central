@@ -23,7 +23,6 @@ db.connect().then(() => {
   
 }).catch((err) => {
   logger.error(err);
-  logger.error("Error connecting to DB");
   process.exit(1);
 })
 
