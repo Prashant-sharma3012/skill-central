@@ -1,19 +1,14 @@
-const db = require('../db');
 const logger = require('../utils/logger');
 const response = require('../utils/response');
+const store = require('../store/employee');
 
-const getUserDetailByEmail = async (req, res) => {
+const getEmployeesByEmail = async (req, res) => {
   if (!req.query.email) {
     return response.clientError(res, 'Email Cannot be blank')
   }
 
   try {
-    let userDetails = await db.instance.models.employees.findOne({
-      where: {
-        email: req.query.email
-      }
-    });
-
+    let userDetails = await store.getEmployeesByEmail(req.query.email);
     return response.success(res, userDetails);
   } catch (err) {
     logger.error(err);
@@ -21,10 +16,9 @@ const getUserDetailByEmail = async (req, res) => {
   }
 }
 
-const listUsers = async (req, res) => {
+const listEmployees = async (req, res) => {
   try {
-    let users = await db.instance.models.employees.findAll();
-
+    let users = await store.listEmployees();
     return response.success(res, users);
   } catch (err) {
     logger.error(err);
@@ -32,20 +26,13 @@ const listUsers = async (req, res) => {
   }
 }
 
-const listUsersByExperience = async (req, res) => {
+const listEmployeesByExperience = async (req, res) => {
   if (!req.query.experience) {
     return response.clientError(res, 'Experience Cannot be blank')
   }
 
   try {
-    let users = await db.instance.models.employees.findAll({
-      where: {
-        experience: {
-          [Op.gt]: req.query.experience,
-        }
-      }
-    });
-
+    let users = await store.listEmployeesByExperience(req.query.experience);
     return response.success(res, users);
   } catch (err) {
     logger.error(err);
@@ -54,7 +41,7 @@ const listUsersByExperience = async (req, res) => {
 }
 
 module.exports = {
-  getUserDetailByEmail,
-  listUsers,
-  listUsersByExperience
+  getEmployeesByEmail,
+  listEmployees,
+  listEmployeesByExperience
 }
