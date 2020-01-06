@@ -3,20 +3,20 @@ const jwt = require('jsonwebtoken');
 const response = require('../utils/response');
 const store = require('../store/auth');
 const logger = require('../utils/logger');
-
+const validator = require('../utils/validator');
 
 const register = async (req, res) => {
-  if (!req.body.email || !req.body.pwd) {
-    return response.clientError(res, "email or password is wrong");
+  let { error } = validator.validateRegisterPayload(req.body);
+
+  if (error) {
+    return response.clientError(res, error);
   }
 
-  let email = req.body.email;
-  let pwd = req.body.pwd;
-
-  let hash = await bcrypt.hash(pwd, 10);
+  let userDetails = req.body;
+  userDetails.hash = await bcrypt.hash(userDetails.pwd, 10);
 
   try {
-    await store.createUser({ email, hash });
+    await store.register(userDetails);
     // ideally i should return the created user details along with jwt, for now lets be simple
     return response.success(res, 'Registered Successfully');
   } catch (err) {
