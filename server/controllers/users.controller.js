@@ -3,7 +3,7 @@ const logger = require('../utils/logger');
 
 const getUserDetailByEmail = async (req, res) => {
   try {
-    let userDetails = await db.instance.models.Employee.findOne({
+    let userDetails = await db.instance.models.employees.findOne({
       where: {
         email: req.query.email
       }
@@ -17,7 +17,7 @@ const getUserDetailByEmail = async (req, res) => {
 
 const listUsers = async (req, res) => {
   try {
-    let users = await db.instance.models.Employee.findAll();
+    let users = await db.instance.models.employees.findAll();
     res.status(200).send(users);
   } catch (err) {
     logger.error(err);
@@ -27,7 +27,7 @@ const listUsers = async (req, res) => {
 
 const listUsersByExperience = async (req, res) => {
   try {
-    let users = await db.instance.models.Employee.findAll({
+    let users = await db.instance.models.employees.findAll({
       where: {
         experience: {
           [Op.gt]: req.query.experience,

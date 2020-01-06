@@ -3,16 +3,13 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/config/config.json')[env];
 const seeder = require('./seeders');
 const logger = require('./utils/logger');
+const fs = require('fs');
 
 const db = {};
 
 let connected = false;
 
-const models = {
-  Employee: '',
-  EmployeeSkill: '',
-  Skill: '',
-}
+const models = {}
 
 var sequelize = new Sequelize(config.database, config.username, config.password, {
   host: config.host,
@@ -21,10 +18,11 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
 
 const initModels = async () => {
   logger.info("Initializing Models");
-  // add models
-  models.Employee = require('./models/employees')(sequelize, Sequelize.DataTypes);
-  models.EmployeeSkill = require('./models/employeeSkill')(sequelize, Sequelize.DataTypes);
-  models.Skill = require('./models/skills')(sequelize, Sequelize.DataTypes);
+  
+  let files = fs.readdirSync('./models');
+  for(let i=0; i< files.length; i++){
+    models[files[i].split('.')[0]] = require(`./models/${files[i]}`)(sequelize, Sequelize.DataTypes);
+  }
 
   logger.info("Models Initialized");
 }

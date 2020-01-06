@@ -2,17 +2,17 @@ const seed = require('./seedData');
 const logger = require('../utils/logger');
 
 const up = async (db) => {
-  let count = await db.models.EmployeeSkill.findAll({where: {}});
+  let count = await db.models.employeeSkill.findAll({where: {}});
 
   if(count.length){
-    return logger.info("Employee table has data");
+    return logger.info("Employee Skill table has data");
   }
 
-  return db.models.EmployeeSkill.bulkCreate(seed.employeeSkills, { timestamps: true });
+  return db.models.employeeSkill.bulkCreate(seed.employeeSkills, { timestamps: true });
 }
 
 const down = (db) => {
-  return db.models.EmployeeSkill.destroy({ where: {} });
+  return db.models.employeeSkill.destroy({ where: {} });
 }
 
 module.exports = { up, down }

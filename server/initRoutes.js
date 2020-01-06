@@ -1,11 +1,13 @@
 const logger = require('./utils/logger');
+const fs = require('fs');
 
 module.exports = (app) => {
   logger.info("Adding Routes");
-  // add routes
-  require('./routes/user.route')(app);
-  require('./routes/skills.route')(app);
-  require('./routes/userSkills.route')(app);
+
+  let files = fs.readdirSync('./routes');
+  for(let i=0; i< files.length; i++){
+    require(`./routes/${files[i]}`)(app);
+  }
 
   logger.info("Routes Initialized");
 }
