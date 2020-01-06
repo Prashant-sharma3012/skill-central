@@ -5,13 +5,15 @@ const logger = require('./utils/logger');
 const initRoutes = require('./initRoutes');
 const auth = require('./middleware/auth');
 const loginRoutes = require('./routes/login.route');
+const traceroute = require('./middleware/trace');
 const app = express();
 
 logger.info("Adding Middlewares");
 // A bit of safe gaurding
 app.use(helmet());
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(traceroute);
 
 // keep login out of auth
 loginRoutes(app);

@@ -3,7 +3,7 @@
     "username": "root",
     "password": "topsecret",
     "database": "skillcentral",
-    "host": "mySql",
+    "host": "localhost",
     "dialect": "mysql",
     "operatorsAliases": false
   },

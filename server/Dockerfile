@@ -1,4 +1,6 @@
-FROM node:10
+FROM node:latest
+
+RUN apk --no-cache add --virtual builds-deps build-base python
 
 WORKDIR /usr/src/app
 

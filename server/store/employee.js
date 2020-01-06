@@ -1,12 +1,12 @@
 const db = require('../db');
 
-const getEmployeesByEmail = async (email) => await db.instance.models.employees.findOne({
+const getEmployeesByEmail = async (email) => db.instance.models.employees.findOne({
   where: { email }
 });
 
-const listEmployees = async () => await db.instance.models.employees.findAll();
+const listEmployees = async () => db.instance.models.employees.findAll();
 
-const listEmployeesByExperience = async (exp) => await db.instance.models.employees.findAll({
+const listEmployeesByExperience = async (exp) => db.instance.models.employees.findAll({
   where: {
     experience: {
       [Op.gt]: exp,
