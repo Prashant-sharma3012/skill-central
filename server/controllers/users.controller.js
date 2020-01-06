@@ -1,31 +1,42 @@
 const db = require('../db');
 const logger = require('../utils/logger');
+const response = require('../utils/response');
 
 const getUserDetailByEmail = async (req, res) => {
+  if (!req.query.email) {
+    return response.clientError(res, 'Email Cannot be blank')
+  }
+
   try {
     let userDetails = await db.instance.models.employees.findOne({
       where: {
         email: req.query.email
       }
     });
-    res.status(200).send(userDetails);
+
+    return response.success(res, userDetails);
   } catch (err) {
     logger.error(err);
-    res.status(500).send('An Error Occured, Please try again');
+    return response.serverError(res, err);
   }
 }
 
 const listUsers = async (req, res) => {
   try {
     let users = await db.instance.models.employees.findAll();
-    res.status(200).send(users);
+
+    return response.success(res, users);
   } catch (err) {
     logger.error(err);
-    res.status(500).send('An Error Occured, Please try again');
+    return response.serverError(res, err);
   }
 }
 
 const listUsersByExperience = async (req, res) => {
+  if (!req.query.experience) {
+    return response.clientError(res, 'Experience Cannot be blank')
+  }
+
   try {
     let users = await db.instance.models.employees.findAll({
       where: {
@@ -34,10 +45,11 @@ const listUsersByExperience = async (req, res) => {
         }
       }
     });
-    res.status(200).send(users);
+
+    return response.success(res, users);
   } catch (err) {
     logger.error(err);
-    res.status(500).send('An Error Occured, Please try again');
+    return response.serverError(res, err);
   }
 }
 

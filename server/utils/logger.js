@@ -7,12 +7,12 @@ const info = (message) => {
 }
 
 const warning = (message) => {
-  var logMessage = `[${new Date().toISOString()}] : Warning : ${message}`;
+  var logMessage = `[${new Date().toISOString()}] : WARNING : ${message}`;
   log(chalk.yellow(logMessage));
 }
 
 const error = (message) => {
-  var logMessage = `[${new Date().toISOString()}] : Error : ${message}`;
+  var logMessage = `[${new Date().toISOString()}] : ERROR : ${message}`;
   log(chalk.red(logMessage));
 }
 
