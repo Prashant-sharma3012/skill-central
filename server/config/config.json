@@ -5,7 +5,8 @@
     "database": "skillcentral",
     "host": "localhost",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "jwtSecret": "supersecret"
   },
   "test": {
     "username": "root",
@@ -13,7 +14,8 @@
     "database": "skillcentral",
     "host": "mySql",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "jwtSecret": "supersecret"
   },
   "production": {
     "username": "root",
@@ -21,6 +23,7 @@
     "database": "skillcentral",
     "host": "mySql",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "jwtSecret": "supersecret"
   }
 }

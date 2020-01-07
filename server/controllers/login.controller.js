@@ -6,6 +6,11 @@ const empStore = require('../store/employee');
 const logger = require('../utils/logger');
 const validator = require('../utils/validator');
 
+const createToken = async (email) => {
+    employee = await empStore.getEmployeesByEmail(email);
+    return jwt.sign(employee.dataValues, 'supersecret', { expiresIn: 6 * 60 * 60 });
+}
+
 const register = async (req, res) => {
   let { error } = validator.validateRegisterPayload(req.body);
   if (error) {
@@ -25,11 +30,7 @@ const register = async (req, res) => {
 
     await authStore.register(userDetails);
 
-    // get user details
-    employee = await empStore.getEmployeesByEmail(userDetails.email);
-
-    let token = jwt.sign(employee.dataValues, 'supersecret', { expiresIn: 6 * 60 * 60 });
-
+    let token = await createToken(userDetails.email);
     // ideally i should return the created user details along with jwt, for now lets be simple
     return response.success(res, {token, message:'Registered Successfully'});
   } catch (err) {
@@ -51,10 +52,7 @@ const login = async (req, res) => {
     await bcrypt.compare(pwd, hash);
 
     // get user details
-    let employee = await empStore.getEmployeesByEmail(email);
-
-    let token = jwt.sign(employee.dataValues, 'supersecret', { expiresIn: 6 * 60 * 60 });
-
+    let token = await createToken(email);
     // ideally i should return the created user details along with jwt, for now lets be simple
     return response.success({token, message: "login successful"})
   } catch (err) {
