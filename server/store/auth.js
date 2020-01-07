@@ -1,23 +1,23 @@
 const db = require('../db');
 
-const createEmployee = async (userdetails) => db.instance.models.employees
+const createEmployee = async (userdetails, t) => db.instance.models.employees
   .build({
     emp_id: userdetails.empId,
     emp_fname: userdetails.fname,
     emp_lname: userdetails.lname,
-    email: user.email,
+    email: userdetails.email,
     experience: userdetails.exp,
     profile_picture: userdetails.profilePic,
-  }).save();
+  }).save({ transaction: t });
 
-const createAuthRecord = async (userdetails) => db.instance.models.employees
-.build({
-  email: userdetails.email,
-  pwd: userdetails.hash
-}).save();
+const createAuthRecord = async (userdetails, t) => db.instance.models.employeeAuth
+  .build({
+    email: userdetails.email,
+    pwd: userdetails.hash
+  }).save({ transaction: t });
 
-const register = async (userDetails) => db.sequelize
-  .transaction(t => Promise.all([createEmployee(userDetails), createAuthRecord(userDetails)]));
+const register = async (userDetails) => db.instance.sequelize
+  .transaction(t => Promise.all([createEmployee(userDetails, t), createAuthRecord(userDetails, t)]));
 
 const getPassword = async (email) => db.instance.models.employeeAuth.findOne({
   where: { email }
