@@ -1,4 +1,7 @@
-FROM node:latest
+FROM node:10
+
+RUN apt-get update && \
+  apt-get install python -y
 
 WORKDIR /usr/src/app
 
